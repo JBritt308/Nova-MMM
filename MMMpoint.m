@@ -1,5 +1,5 @@
 
-function [Ay,N] = MMMpoint(beta,delta,R,vehicle,Fy,Mz)
+function [Ay,N] = MMMpoint(beta,delta,Vx,vehicle,Fy,Mz)
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
 % SheetFy = strcat('Fy',int2str(TireID));
@@ -34,7 +34,7 @@ n=0;
 while(abs(c-d)>.00001) %abs((Ay-AyOld)/((Ay+AyOld)/2))>.005
 n=n+1;
     
-[aFL aFR aRL aRR] = SACalc(beta, delta, R, Ay, vehicle);
+[aFL aFR aRL aRR] = SACalc(beta, delta, Vx, Ay, vehicle);
  EWT_Fr = (Ay * vehicle.chassis.mass.susmass * dz*(AR_FrontSpring+AR_FrontARB)/AR_Total)/(vehicle.chassis.fronttrack*1000); %Elastic Weight Transfer Front
  EWT_Rr = (Ay * vehicle.chassis.mass.susmass * dz*(AR_RearSpring+AR_RearARB)/AR_Total)/(vehicle.chassis.reartrack*1000); %Elastic Weight Transfer Rear
  GWT_Fr = (vehicle.chassis.mass.susmass *vehicle.chassis.mass.totalmassdistribution/100*Ay*vehicle.chassis.roll.fRCheight)/(vehicle.chassis.fronttrack*1000); %Geometric Weight Transfer on Front

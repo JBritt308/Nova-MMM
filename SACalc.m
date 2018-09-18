@@ -1,9 +1,14 @@
-function [aFL, aFR, aRL, aRR] = SACalc(beta, delta, R, Ay, vehicle)
+function [aFL, aFR, aRL, aRR] = SACalc(beta, delta, Vx, Ay, vehicle)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
-Vx = sqrt(Ay*R);
-Vy = Vx*beta;
-r = Vx/R;
+%Vx = sqrt(Ay*R);
+%Vy = Vx*beta;
+%r = Vx/R;
+
+r = Ay/Vx;
+Vy = Vx * beta; 
+R = Vx/r;
+
 
 a=vehicle.chassis.mass.a;
 b=vehicle.chassis.mass.b;
