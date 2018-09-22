@@ -57,10 +57,11 @@ for y=1:1:15
     pp = spline(xspline,yspline);
     yy = ppval(pp,xx);
     
-    figure(1+y);
+    figure(2);
     plot(xspline,yspline,xx,yy);
-    L = findobj(1+y,'type','line');
+    L = findobj(2,'type','line');
     copyobj(L,findobj(1,'type','axes'));
+    close(2);
     length(ymdA)
 end
 
@@ -71,10 +72,11 @@ for z=1:1:15
     pp2 = spline(xspline,yspline);
     yy = ppval(pp2,xx);
     
-    figure(16+z);
+    figure(2);
     plot(xspline,yspline,xx,yy);
-    L = findobj(16+z,'type','line');
+    L = findobj(2,'type','line');
     copyobj(L,findobj(1,'type','axes'));
+    close(2);
 end
 end
 

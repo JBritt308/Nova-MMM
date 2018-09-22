@@ -14,7 +14,7 @@ chassis.reartrack = 1.1684; % [m]
 
 % Mass Distribution
 chassis.mass.totalmass = 275; % [kg]
-chassis.mass.totalmassdistribution = 45; % [%] weight on front tires
+chassis.mass.totalmassdistribution = 50; % [%] weight on front tires
 chassis.mass.frontnonsusmass = 12; % [kg] front non suspended mass per wheel
 chassis.mass.rearnonsusmass = 13; % [kg] rear non suspended mass per wheel
 chassis.mass.susmass = chassis.mass.totalmass - 2*chassis.mass.frontnonsusmass - 2*chassis.mass.rearnonsusmass;
