@@ -35,17 +35,27 @@ chassis.spring.rspringstiff = 35.03; % [N/mm] rear spring stiffness
 chassis.arb.fARBstiff = 19.27; % [N/mm]
 chassis.arb.rARBstiff = 19.91; % [N/mm]
 
+
 % Motion Ratios
 chassis.spring.fspringMR = 1.25; % [mm/mm] front spring motion ratio
 chassis.spring.rspringMR = 1.3; % [mm/mm] rear spring motion ratio
 chassis.arb.fARBMR = 2.250; % [mm/mm]
 chassis.arb.rARBMR = 2.250; % [mm/mm]
-chassis.spring.FWR = 20.661; %Front Wheel Rate (N/mm)
-chassis.spring.RWR = 22.727; %Rear Wheel Rate (N/mm)
+chassis.spring.FWR = chassis.spring.fspringstiff/chassis.spring.fspringMR^2; %Front Wheel Rate (N/mm)
+chassis.spring.RWR = chassis.spring.rspringstiff/chassis.spring.rspringMR^2; %Rear Wheel Rate (N/mm)
 % Roll
 chassis.roll.fRCheight = 15; % [mm] front roll center height
 chassis.roll.rRCheight = 40; % [mm] rear roll center height
-chassis.roll.SMCGheight = 282.76;
+chassis.roll.SMCGheight = (chassis.mass.totalmass*chassis.mass.cg-(2*chassis.mass.frontnonsusmass*chassis.mass.frontnonsusmassheight+2*chassis.mass.rearnonsusmass*chassis.mass.rearnonsusmassheight))/chassis.mass.susmass;
+
+chassis.roll.AR_FrontSpring = ((chassis.fronttrack.^2)*tan(deg2rad(1)) * chassis.spring.FWR * 1000)/2; %Anti-roll stiffness from front spring (Nm/deg)
+chassis.roll.AR_RearSpring = ((chassis.reartrack.^2)*tan(deg2rad(1)) * chassis.spring.RWR * 1000)/2; %Anti-roll stiffness from rear spring (Nm/deg)
+
+chassis.roll.AR_FrontARB = ((chassis.arb.fARBstiff*1000)*(chassis.fronttrack.^2)*tan(deg2rad(1)))/(chassis.arb.fARBMR.^2); %Anti-roll stiffness from front ARB (Nm/deg)
+chassis.roll.AR_RearARB = (chassis.arb.rARBstiff*1000* (chassis.reartrack.^2)*tan(deg2rad(1)))/(chassis.arb.rARBMR.^2); %Anti-roll stiffness from rear ARB (Nm/deg)
+chassis.roll.AR_Total = chassis.roll.AR_FrontSpring + chassis.roll.AR_RearSpring + chassis.roll.AR_FrontARB + chassis.roll.AR_RearARB; %Total Anti-roll stiffness
+chassis.roll.dz = chassis.roll.SMCGheight -(((chassis.roll.rRCheight-chassis.roll.fRCheight)/(chassis.wheelbase*1000) * ((1-(chassis.mass.totalmassdistribution/100))*(chassis.wheelbase*1000))) + chassis.roll.fRCheight); % Z distance from SM CG to roll axis at the SM CG
+
 % Aerodynamics
 chassis.aero.DFcoeff = 0; % [] down force coefficient
 chassis.aero.DFdist = 45; % [%] front down force distribution

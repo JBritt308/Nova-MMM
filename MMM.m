@@ -1,5 +1,5 @@
 
-function MMM(Vx,TireID,daddy)
+function MMM(Vx,TireID,plotter)
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
 Vehicle_Initialization();
@@ -16,8 +16,9 @@ x = -7;
 y = 7;
 step =1;
 for delta=x:step:y
-    
+    delta
     for beta=x:step:y
+        beta
         i=i+1;
         [ymdA(i),ymdN(i)] = MMMpoint(beta,delta,Vx,vehicle,Fy,Mz);
         YMD(i,:) = [beta delta ymdA(i) ymdN(i)] ;
@@ -37,9 +38,9 @@ scatter(ymdA,ymdN,10,colorMat,'filled')
 axis([-3 3 -5000 5000])
 grid on
 
-max(abs(ymdA))
-max(abs(ymdN))
-if daddy == true
+%max(abs(ymdA))
+%max(abs(ymdN))
+if plotter == true
 i = 0;
 for beta=x:step:y
     
@@ -62,7 +63,7 @@ for y=1:1:15
     L = findobj(2,'type','line');
     copyobj(L,findobj(1,'type','axes'));
     close(2);
-    length(ymdA)
+    %length(ymdA)
 end
 
 for z=1:1:15
