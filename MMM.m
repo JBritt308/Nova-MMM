@@ -16,7 +16,9 @@ x = -7;
 y = 7;
 step =1;
 for delta=x:step:y
+    delta
     for beta=x:step:y
+        beta
         i=i+1;
         [ymdA(i),ymdN(i)] = MMMpoint(beta,delta,Vx,vehicle,Fy,Mz);
         YMD(i,:) = [beta delta ymdA(i) ymdN(i)] ;
