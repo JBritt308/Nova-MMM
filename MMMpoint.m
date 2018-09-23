@@ -15,7 +15,7 @@ c = b - (b-a)/gr;
 d = a + (b-a)/gr;
 
 
-Ay = 1;
+Ay = 0.60;
 %AyOld = 0;
 fzF = vehicle.chassis.mass.totalmass*vehicle.chassis.mass.totalmassdistribution/100;
 fzR = vehicle.chassis.mass.totalmass-fzF;
@@ -33,30 +33,69 @@ fzRR = fzR/2;
 % dz = vehicle.chassis.roll.SMCGheight -(((vehicle.chassis.roll.rRCheight-vehicle.chassis.roll.fRCheight)/(vehicle.chassis.wheelbase*1000) * ((1-(vehicle.chassis.mass.totalmassdistribution/100))*(vehicle.chassis.wheelbase*1000))) + vehicle.chassis.roll.fRCheight); % Z distance from SM CG to roll axis at the SM CG
 
 n=0;
-while (abs(c-d)>.001) %abs((Ay-AyOld)/((Ay+AyOld)/2))>.005
+converge = false;
+
+while (converge == false)
 n=n+1;
     
 [aFL aFR aRL aRR] = SACalc(beta, delta, Vx, Ay, vehicle);
 
 [WTF,WTR]=WT(Ay,vehicle);
 
-%fzFL = fzF/2 + WTF;
-%fzFR = fzF/2 -WTF;
-%fzRL = fzR/2 +WTF;
-%fzRR = fzR/2 -WTR;
+ fzFL = fzF/2 + WTF;
+ fzFR = fzF/2 -WTF;
+ fzRL = fzR/2 +WTF;
+ fzRR = fzR/2 -WTR;
 
 AyOld = Ay;
 %[fFL fFR fRL fRR]= TireReader(TireID, [aFL aFR aRL aRR], [fzFL fzFR fzRL fzRR]);
 
-fFL = Fy(round((aFL + 15)*2) + 2, round(abs(fzFL/20)) + 1) * .7;%TireReader(TireID, aFL, fzFL);
-fFR = Fy(round((aFR + 15)*2) + 2, round(abs(fzFR/20)) + 1) * .7;%TireReader(TireID, aFR, fzFR);
-fRL = Fy(round((aRL + 15)*2) + 2, round(abs(fzRL/20)) + 1) * .7;%TireReader(TireID, aRL, fzRL);
-fRR = Fy(round((aRR + 15)*2) + 2, round(abs(fzRR/20)) + 1) * .7;%(TireID, aRR, fzRR);
+SlipKeys = linspace(-15,15,61);
+SlipValues = linspace(1,61,61);
+SlipMap = containers.Map(SlipKeys,SlipValues);
+LoadKeys = linspace(20,200,10);
+LoadValues = linspace(1,10,10);
+LoadMap = containers.Map(LoadKeys,LoadValues);
 
-MzFL = Mz(round((aFL + 15)*2) + 2, round(abs(fzFL/20)) + 1) * .7;
-MzFR = Mz(round((aFR + 15)*2) + 2, round(abs(fzFR/20)) + 1) * .7;
-MzRL = Mz(round((aRL + 15)*2) + 2, round(abs(fzRL/20)) + 1) * .7 ;
-MzRR = Mz(round((aRR + 15)*2) + 2, round(abs(fzRR/20)) + 1) * .7;
+if aFL > 15 || aFL < -15
+    aFL
+    aFL = (aFL/abs(aFL))*15;
+end
+if  aFR > 15 || aFR < -15
+    aFR
+    aFR = (aFR/abs(aFR))*15;
+end
+if  aRL > 15 || aRL < -15
+    aRL
+    aRL = (aRL/abs(aRL))*15;
+end
+if  aRR > 15 || aRR < -15
+    aRR
+    aRR = (aRR/abs(aRR))*15;
+end
+
+if  fzFL < 20
+    fzFL = 20;
+end
+if  fzFR < 20
+    fzFR = 20;
+end
+if  fzRL < 20
+    fzRL = 20;
+end
+if  fzRR < 20
+    fzRR = 20;
+end
+
+fFL = Fy(SlipMap(round(aFL/.5)*.5), LoadMap(round(fzFL/20)*20)) * .7;%TireReader(TireID, aFL, fzFL);
+fFR = Fy(SlipMap(round(aFR/.5)*.5), LoadMap(round(fzFR/20)*20)) * .7;%TireReader(TireID, aFR, fzFR);
+fRL = Fy(SlipMap(round(aRL/.5)*.5), LoadMap(round(fzRL/20)*20)) * .7;%TireReader(TireID, aRL, fzRL);
+fRR = Fy(SlipMap(round(aRR/.5)*.5), LoadMap(round(fzRR/20)*20)) * .7;%(TireID, aRR, fzRR);
+
+MzFL = Mz(SlipMap(round(aFL/.5)*.5), LoadMap(round(fzFL/20)*20)) * .7;
+MzFR = Mz(SlipMap(round(aFR/.5)*.5), LoadMap(round(fzFR/20)*20)) * .7;
+MzRL = Mz(SlipMap(round(aRL/.5)*.5), LoadMap(round(fzRL/20)*20)) * .7 ;
+MzRR = Mz(SlipMap(round(aRR/.5)*.5), LoadMap(round(fzRR/20)*20)) * .7;
 
 fF = fFL+fFR;
 fR = fRL+fRR;
@@ -66,6 +105,11 @@ iMz = MzFL + MzFR + MzRL + MzRR; %iterative Mz
 
 Ay = iFy/vehicle.chassis.mass.totalmass/9.81;
 N = fF*vehicle.chassis.mass.a-fR*vehicle.chassis.mass.b + iMz; %N*m
+
+per_diff = abs(AyOld-Ay)/((AyOld+Ay)/2);
+if per_diff < 1
+    converge = true;
+end
 
 if(abs(c - Ay) < abs(d - Ay))
     b = d;
@@ -82,8 +126,8 @@ d = a + (b-a)/gr;
 %      abs(sum([WTF,WTR]))-abs(sum([A,B]))
 %  end
 end
-n
-Ay = (b+a)/2;
 
+%Ay = (b+a)/2;
+converge = false;
 return
 end

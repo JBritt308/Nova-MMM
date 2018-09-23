@@ -8,7 +8,8 @@ SheetFy = strcat('Fy',int2str(TireID));
 SheetMz = strcat('Mz',int2str(TireID));
 Fy = xlsread('TireDatabase.xls',SheetFy);
 Mz = xlsread('TireDatabase.xls',SheetMz);
-
+Fy = Fy(2:62,2:11);
+Mz = Mz(2:62,2:11);
 
 vehicle=lapsim.vehicle;
 i=0;
@@ -16,9 +17,7 @@ x = -7;
 y = 7;
 step =1;
 for delta=x:step:y
-    delta
     for beta=x:step:y
-        beta
         i=i+1;
         [ymdA(i),ymdN(i)] = MMMpoint(beta,delta,Vx,vehicle,Fy,Mz);
         YMD(i,:) = [beta delta ymdA(i) ymdN(i)] ;

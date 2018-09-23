@@ -4,9 +4,9 @@ function [aFL, aFR, aRL, aRR] = SACalc(beta, delta, Vx, Ay, vehicle)
 %Vx = sqrt(Ay*R);
 %Vy = Vx*beta;
 %r = Vx/R;
-
-r = Ay/Vx;
-Vy = Vx * beta; 
+Vx = Vx*1000/3600;
+r = (Ay*9.81)/Vx;
+Vy = Vx * deg2rad(beta); 
 R = Vx/r;
 
 
@@ -15,10 +15,10 @@ b=vehicle.chassis.mass.b;
 Tf = vehicle.chassis.fronttrack;
 Tr = vehicle.chassis.reartrack; 
 
-aFL = (Vy+r*a)/(Vx-r*Tf/2)-delta;
-aFR = (Vy+r*a)/(Vx+r*Tf/2)-delta;
-aRR = (Vy-r*b)/(Vx+r*Tr/2);
-aRL = (Vy-r*b)/(Vx-r*Tr/2);
+aFL = rad2deg((Vy+r*a)/(Vx-r*Tf/2)-deg2rad(delta));
+aFR = rad2deg((Vy+r*a)/(Vx+r*Tf/2)-deg2rad(delta));
+aRR = rad2deg((Vy-r*b)/(Vx+r*Tr/2));
+aRL = rad2deg((Vy-r*b)/(Vx-r*Tr/2));
 
 return
 end
