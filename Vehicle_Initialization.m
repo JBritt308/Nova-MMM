@@ -14,31 +14,31 @@ chassis.reartrack = 1.1684; % [m]
 
 % Mass Distribution
 chassis.mass.totalmass = 275; % [kg]
-chassis.mass.totalmassdistribution = 45; % [%] weight on front tires
-chassis.mass.frontnonsusmass = 12; % [kg] front non suspended mass per wheel
-chassis.mass.rearnonsusmass = 13; % [kg] rear non suspended mass per wheel
+chassis.mass.totalmassdistribution = 48.36; % [%] weight on front tires
+chassis.mass.frontnonsusmass = 8.14; % [kg] front non suspended mass per wheel
+chassis.mass.rearnonsusmass = 8.68; % [kg] rear non suspended mass per wheel
 chassis.mass.susmass = chassis.mass.totalmass - 2*chassis.mass.frontnonsusmass - 2*chassis.mass.rearnonsusmass;
 
 
-chassis.mass.a = chassis.wheelbase*chassis.mass.totalmassdistribution/100;
-chassis.mass.b = chassis.wheelbase*(100-chassis.mass.totalmassdistribution)/100;
+chassis.mass.a = chassis.wheelbase*(100-chassis.mass.totalmassdistribution)/100;
+chassis.mass.b = chassis.wheelbase*(chassis.mass.totalmassdistribution)/100;
 
-chassis.mass.cg = 294; % [mm] total mass cg height
-chassis.mass.frontnonsusmassheight = 260; % [mm] front non suspended mass height
-chassis.mass.rearnonsusmassheight = 260; % [mm] rear non suspended mass height
+chassis.mass.cg = 276.10; % [mm] total mass cg height
+chassis.mass.frontnonsusmassheight = 228.6; % [mm] front non suspended mass height
+chassis.mass.rearnonsusmassheight = 228.6; % [mm] rear non suspended mass height
 
 chassis.mass.susmassrollinertia = 200; % [kg.m^2] suspended mass roll inertia (ref SM CG - Ixx)
 
 % Spring & ARB stiffnesses
-chassis.spring.fspringstiff = 26.3; % [N/mm] front spring stiffness
-chassis.spring.rspringstiff = 35.03; % [N/mm] rear spring stiffness
+chassis.spring.fspringstiff = 25; % [N/mm] front spring stiffness
+chassis.spring.rspringstiff = 27.5; % [N/mm] rear spring stiffness
 chassis.arb.fARBstiff = 19.27; % [N/mm]
 chassis.arb.rARBstiff = 19.91; % [N/mm]
 
 
 % Motion Ratios
-chassis.spring.fspringMR = 1.25; % [mm/mm] front spring motion ratio
-chassis.spring.rspringMR = 1.3; % [mm/mm] rear spring motion ratio
+chassis.spring.fspringMR = 1.10; % [mm/mm] front spring motion ratio
+chassis.spring.rspringMR = 1.10; % [mm/mm] rear spring motion ratio
 chassis.arb.fARBMR = 2.250; % [mm/mm]
 chassis.arb.rARBMR = 2.250; % [mm/mm]
 chassis.spring.FWR = chassis.spring.fspringstiff/chassis.spring.fspringMR^2; %Front Wheel Rate (N/mm)

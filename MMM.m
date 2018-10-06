@@ -2,6 +2,7 @@
 function MMM(Vx,TireID,plotter)
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
+
 Vehicle_Initialization();
 
 SheetFy = strcat('Fy',int2str(TireID));
@@ -16,11 +17,15 @@ i=0;
 x = -7;
 y = 7;
 step =1;
+
+initialAy = 0;
 for delta=x:step:y
+    initialAy = 0;
     for beta=x:step:y
         i=i+1;
-        [ymdA(i),ymdN(i)] = MMMpoint(beta,delta,Vx,vehicle,Fy,Mz);
+        [ymdA(i),ymdN(i)] = MMMpoint(beta,delta,Vx,vehicle,Fy,Mz,initialAy);
         YMD(i,:) = [beta delta ymdA(i) ymdN(i)] ;
+        initialAy = ymdA(i);
     end
 end
 
@@ -32,7 +37,6 @@ for t = 1:1:s(1)/d
     colorMat = horzcat(colorMat,color(t)*ones(d));
 end
 
-
 scatter(ymdA,ymdN,10,colorMat,'filled')
 axis([-3 3 -5000 5000])
 grid on
@@ -42,10 +46,11 @@ grid on
 if plotter == true
 i = 0;
 for beta=x:step:y
-    
+    initialAy = 0;
     for delta=x:step:y
         i=i+1;
-        [ymdA2(i),ymdN2(i)] = MMMpoint(beta,delta,Vx,vehicle,Fy,Mz);
+        [ymdA2(i),ymdN2(i)] = MMMpoint(beta,delta,Vx,vehicle,Fy,Mz,initialAy);
+        initialAy = ymdA2(i);
     end
 end
 
