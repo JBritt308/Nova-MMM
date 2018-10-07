@@ -76,10 +76,10 @@ end
 if  fzRR < 20
     fzRR = 20;
 end
-fFL = cos(deg2rad(delta))*Fy(SlipMap(round(aFL/.5)*.5), LoadMap(round(fzFL/20)*20)) * scale;%TireReader(TireID, aFL, fzFL);
-fFR = cos(deg2rad(delta))*Fy(SlipMap(round(aFR/.5)*.5), LoadMap(round(fzFR/20)*20)) * scale;%TireReader(TireID, aFR, fzFR);
-fRL = Fy(SlipMap(round(aRL/.5)*.5), LoadMap(round(fzRL/20)*20)) * scale;%TireReader(TireID, aRL, fzRL);
-fRR = Fy(SlipMap(round(aRR/.5)*.5), LoadMap(round(fzRR/20)*20)) * scale;%(TireID, aRR, fzRR);
+fFL = cos(deg2rad(delta))*Fy(SlipMap(round(aFL/.5)*.5), LoadMap(round(fzFL/20)*20)) * scale;
+fFR = cos(deg2rad(delta))*Fy(SlipMap(round(aFR/.5)*.5), LoadMap(round(fzFR/20)*20)) * scale;
+fRL = Fy(SlipMap(round(aRL/.5)*.5), LoadMap(round(fzRL/20)*20)) * scale;
+fRR = Fy(SlipMap(round(aRR/.5)*.5), LoadMap(round(fzRR/20)*20)) * scale;
 
 MzFL = cos(deg2rad(delta))*Mz(SlipMap(round(aFL/.5)*.5), LoadMap(round(fzFL/20)*20)) * scale;
 MzFR = cos(deg2rad(delta))*Mz(SlipMap(round(aFR/.5)*.5), LoadMap(round(fzFR/20)*20)) * scale;
@@ -104,6 +104,8 @@ c = b - (b-a)/gr;
 d = a + (b-a)/gr;
 
 end
-
+[WTF,WTR]=WT(Ay,vehicle);
+x = [WTF;WTR;aFL;aFR;aRL;aRR];
+Ay = myNeuralNetworkFunction(x);
 return
 end

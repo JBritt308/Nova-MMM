@@ -32,9 +32,6 @@ Vy = Vx * tan(deg2rad(beta));
 
 R = Vx/r;
 
-
-
-
 a=vehicle.chassis.mass.a;
 b=vehicle.chassis.mass.b;
 Tf = vehicle.chassis.fronttrack;
@@ -45,11 +42,7 @@ aFL = rad2deg((Vy+r*a)/(Vx-r*Tf/2)-deg2rad(delta) ) ;
 aFR = rad2deg((Vy+r*a)/(Vx+r*Tf/2)-deg2rad(delta)) ;
 aRR = rad2deg((Vy-r*b)/(Vx+r*Tr/2));
 aRL = rad2deg((Vy-r*b)/(Vx-r*Tr/2));
-% 
-% aFL = rad2deg(deg2rad(beta) + a/R - deg2rad(delta));
-% aFR = aFL;
-% aRR = rad2deg(deg2rad(beta) - b/R);
-% aRL = aRR;
+
 return
 end
 
