@@ -4,27 +4,25 @@ function [aFL, aFR, aRL, aRR] = SACalc(beta, delta, Vx, Ay, vehicle,AyOld)
 %Vx = sqrt(Ay*R);
 %Vy = Vx*beta;
 %r = Vx/R;
-if( Vx > 100)
+if( Vx >= 100)
     Pr = .8;
-elseif (Vx <= 100 && Vx > 50)
+elseif (Vx < 100 && Vx > 50)
     Pr = .5;
 else
-    Pr = .25;
+    Pr = .2;
 end
 
-[b,a] = butter(6,.35/.5);
+[b,a] = butter(6,.6);
 [d,c] = butter(6,.65/1.25);
 Vx = Vx*1000/3600;
 r_Old = (AyOld*9.81)/Vx;
 
-if AyOld == 0
-    r = 0;
-else
-    r = (1-Pr)*((Ay*9.81)/Vx) + (Pr)*r_Old;
-end
-if Vx > 50
+
+r = (1-Pr)*((Ay*9.81)/Vx) + (Pr)*r_Old;
+
+if Vx*3600/1000 > 50 && Vx*3600/1000 <= 100
     r = filter(b,a,r);
-else
+elseif Vx*3600/1000 <= 50
     r = filter(d,c,r);
 end
 

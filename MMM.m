@@ -9,8 +9,8 @@ SheetFy = strcat('Fy',int2str(TireID));
 SheetMz = strcat('Mz',int2str(TireID));
 Fy = xlsread('TireDatabase.xls',SheetFy);
 Mz = xlsread('TireDatabase.xls',SheetMz);
-Fy = Fy(2:62,2:11);
-Mz = Mz(2:62,2:11);
+Fy = Fy(2:62,2:32);
+Mz = Mz(2:62,2:32);
 
 vehicle=lapsim.vehicle;
 i=0;
@@ -38,7 +38,7 @@ for t = 1:1:s(1)/d
 end
 
 scatter(ymdA,ymdN,10,colorMat,'filled')
-axis([-3 3 -5000 5000])
+axis([-3 3 -1 1])
 grid on
 
 %max(abs(ymdA))
