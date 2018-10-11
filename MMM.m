@@ -41,19 +41,37 @@ scatter(ymdA,ymdN,10,colorMat,'filled')
 axis([-3 3 -1 1])
 grid on
 
-%max(abs(ymdA))
-%max(abs(ymdN))
-if plotter == true
+
 i = 0;
-for beta=x:step:y
-    initialAy = 0;
+for beta=x:step:y %Assemble beta-iterative array
+  index = find(YMD(:,1)==beta);
+  j=0;
     for delta=x:step:y
         i=i+1;
-        [ymdA2(i),ymdN2(i)] = MMMpoint(beta,delta,Vx,vehicle,Fy,Mz,initialAy);
-        initialAy = ymdA2(i);
-    end
+        j=j+1;
+            ymdA2(i) = YMD(index(j),3);
+            ymdN2(i) = YMD(index(j),4);
+    end 
 end
 
+for i=-7:1:7 %Calculate Control
+cindex=find(YMD(:,1)==i);
+sindex=find(YMD(:,2)==i);
+
+YMD(cindex(1),5)=abs(YMD(cindex(2),4)-YMD(cindex(1),4));
+YMD(sindex(1),6)=abs(YMD(sindex(2),4)-YMD(sindex(1),4));
+
+for j=2:1:(size(cindex,1)-1)
+YMD(cindex(j),5)=(abs(YMD(cindex(j+1),4)-YMD(cindex(j),4))+abs(YMD(cindex(j-1),4)-YMD(cindex(j),4)))/2;
+YMD(sindex(j),6)=(abs(YMD(sindex(j+1),4)-YMD(sindex(j),4))+abs(YMD(sindex(j-1),4)-YMD(sindex(j),4)))/2;
+end
+
+YMD(cindex(size(cindex,1)),5)=abs(YMD(cindex(size(cindex,1)),4)-YMD(cindex(size(cindex,1)-1),4));
+YMD(sindex(size(sindex,1)),6)=abs(YMD(sindex(size(sindex,1)),4)-YMD(sindex(size(sindex,1)-1),4));
+
+end
+
+if plotter == true
 
 for y=1:1:15
     xspline = YMD(1 + (y-1)*15:15 + (y-1)*15,3);
