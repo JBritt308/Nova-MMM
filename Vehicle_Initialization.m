@@ -8,13 +8,13 @@ lapsim.plotpooper=false;
 
 % Structural
 chassis.wheelbase= 1.524; % [m]
-chassis.fronttrack = 1.0; % [m]
+chassis.fronttrack = 1.2194; % [m]
 chassis.reartrack = 1.1684; % [m]
 
 
 % Mass Distribution
 chassis.mass.totalmass = 275; % [kg]
-chassis.mass.totalmassdistribution = 48.36; % [%] weight on front tires
+chassis.mass.totalmassdistribution = 48; % [%] weight on front tires
 chassis.mass.frontnonsusmass = 8.14; % [kg] front non suspended mass per wheel
 chassis.mass.rearnonsusmass = 8.68; % [kg] rear non suspended mass per wheel
 chassis.mass.susmass = chassis.mass.totalmass - 2*chassis.mass.frontnonsusmass - 2*chassis.mass.rearnonsusmass;
@@ -30,7 +30,7 @@ chassis.mass.rearnonsusmassheight = 228.6; % [mm] rear non suspended mass height
 chassis.mass.susmassrollinertia = 200; % [kg.m^2] suspended mass roll inertia (ref SM CG - Ixx)
 
 % Spring & ARB stiffnesses
-chassis.spring.fspringstiff = 25; % [N/mm] front spring stiffness
+chassis.spring.fspringstiff = 20; % [N/mm] front spring stiffness
 chassis.spring.rspringstiff = 27.5; % [N/mm] rear spring stiffness
 chassis.arb.fARBstiff = 19.27; % [N/mm]
 chassis.arb.rARBstiff = 19.91; % [N/mm]
