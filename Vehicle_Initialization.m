@@ -23,7 +23,7 @@ chassis.mass.susmass = chassis.mass.totalmass - 2*chassis.mass.frontnonsusmass -
 chassis.mass.a = chassis.wheelbase*(100-chassis.mass.totalmassdistribution)/100;
 chassis.mass.b = chassis.wheelbase*(chassis.mass.totalmassdistribution)/100;
 
-chassis.mass.cg = 274; % [mm] total mass cg height
+chassis.mass.cg = 233.46; % [mm] total mass cg height
 chassis.mass.frontnonsusmassheight = 228.6; % [mm] front non suspended mass height
 chassis.mass.rearnonsusmassheight = 228.6; % [mm] rear non suspended mass height
 
@@ -31,9 +31,9 @@ chassis.mass.susmassrollinertia = 200; % [kg.m^2] suspended mass roll inertia (r
 
 % Spring & ARB stiffnesses
 chassis.spring.fspringstiff = 20; % [N/mm] front spring stiffness
-chassis.spring.rspringstiff = 27.5; % [N/mm] rear spring stiffness
-chassis.arb.fARBstiff = 19.27; % [N/mm]
-chassis.arb.rARBstiff = 19.91; % [N/mm]
+chassis.spring.rspringstiff = 65; % [N/mm] rear spring stiffness
+chassis.arb.fARBstiff = 0; % [N/mm]
+chassis.arb.rARBstiff = 27.34; % [N/mm]
 
 
 % Motion Ratios

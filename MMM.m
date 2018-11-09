@@ -1,8 +1,8 @@
 
-function [balance] = MMM(Vx,TireID,plotter)
+function [YMD,balance] = MMM(Vx,TireID,plotter)
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
-
+close all;
 Vehicle_Initialization();
 
 SheetFy = strcat('Fy',int2str(TireID));
@@ -42,11 +42,11 @@ axis([-3 3 -1 1])
 grid on
 xlabel('Lateral Acceleration (g)');
 ylabel('Yaw Coefficient');
-title(['Milliken Moment Diagram for ',int2str(Vx),' mph']);
+title(['Milliken Moment Diagram for ',int2str(Vx),' kph']);
 
 for i=-7:1:7 %Calculate Stability&Control
-cindex=find(YMD(:,1)==i); %Form Control index for beta=i
-sindex=find(YMD(:,2)==i); %Form Stability index for delta=i
+cindex=find(YMD(:,1)==i); %Form Stability index for beta=i
+sindex=find(YMD(:,2)==i); %Form Control index for delta=i
 
 YMD(cindex(1),6)=YMD(cindex(2),4)-YMD(cindex(1),4);
 YMD(sindex(1),5)=YMD(sindex(2),4)-YMD(sindex(1),4);
@@ -117,7 +117,7 @@ pp2 = spline(xspline,yspline);
 yy = ppval(pp2,xx);
 plot(xx,yy);
 xlabel('Lateral Acceleration (g)');
-ylabel('Stability (dN/dD)');
+ylabel('Stability (dN/d\beta)');
 title('Stability thru Origin');
 
 figure(4);
@@ -127,7 +127,7 @@ pp2 = spline(xspline,yspline);
 yy = ppval(pp2,xx);
 plot(xx,yy);
 xlabel('Lateral Acceleration (g)');
-ylabel('Control (dN/dB)');
+ylabel('Control (dN/d\alpha)');
 title('Control thru Origin');
 end
 
